@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://bxj4ogrqs753d"]
+
+[ext_resource type="Script" path="res://scene2_main_script.gd" id="1_mivcq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwbmc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fudk4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5721l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1oqdd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmeqx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3813c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tihxt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4by26"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6scln"]
+albedo_color = Color(0.196078, 0.745098, 0.305882, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j703f"]
+albedo_color = Color(0.462745, 0.870588, 1, 1)
+
+[node name="scene2" type="Node3D"]
+script = ExtResource("1_mivcq")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material = SubResource("StandardMaterial3D_nwbmc")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+material = SubResource("StandardMaterial3D_fudk4")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+material = SubResource("StandardMaterial3D_5721l")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+material = SubResource("StandardMaterial3D_1oqdd")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+material = SubResource("StandardMaterial3D_cmeqx")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
+material = SubResource("StandardMaterial3D_3813c")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material = SubResource("StandardMaterial3D_tihxt")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+material = SubResource("StandardMaterial3D_4by26")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.961334, 0, -0.275386, 0, 1, 0, 0.275386, 0, 0.961334, -1.31442, 3.37616, 6.92751)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.984902, -0.0305469, -0.170396, 0.0792912, 0.954589, 0.28718, 0.153886, -0.296355, 0.942599, 6.55934, 3.85638, 8.71611)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_6scln")
+
+[node name="wall1" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 49, -50)
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_j703f")
+
+[node name="wall2" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 49, 0)
+size = Vector3(100, 100, 1)
+material = SubResource("StandardMaterial3D_j703f")
