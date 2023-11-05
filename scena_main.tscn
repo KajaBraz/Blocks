@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://lj803ajxskdt"]
+
+[ext_resource type="Script" path="res://Box3D-1.gd" id="1_n7hbe"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.629903, 0.77014, -0.100529, 0, -0.129436, -0.991588, -0.776673, 0.624605, -0.0815322, 1.58829, 0, 0)
+script = ExtResource("1_n7hbe")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.944257, 0.98666, 3.38887)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.56758, 1.39962, 2.3699)
+light_color = Color(0.835294, 0.835294, 0, 1)
+light_energy = 8.907
+light_indirect_energy = 9.889
+light_volumetric_fog_energy = 12.313
+light_size = 0.444
+light_specular = 5.187
+omni_range = 773.177
+omni_shadow_mode = 0
