@@ -2,7 +2,7 @@ extends CSGBox3D
 
 var time = 0.0
 var my_rotate = false
-
+var moving = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,6 +14,7 @@ func _ready():
 func _process(delta):
 	if my_rotate == true:
 		rotate(Vector3(0,1,0),0.02)
+	position[0] += 0.05 * moving
 	
 #	time += delta
 #	if time > 1.0:
@@ -28,17 +29,24 @@ func _process(delta):
 	
 	
 func _input(event):
-	if event is InputEventMouseButton:
-		print(event.position)
-#	print(event.is_action_pressed("ui_left"))
-#	print(event.as_text())
+	print(event)
+	print(event.as_text())
+	print("*")
+	
+#	if event is InputEventMouseButton:
+#		print(event.position)
+
 	if event.is_action_pressed("ui_left"):
-		position[0] -= 0.1
+		moving = -1
 	elif event.is_action_pressed("ui_right"):
-		position[0] += 0.1
+		moving = 1
+	elif event.is_action_released("ui_left") or event.is_action_released("ui_right"):
+		moving = 0
+	
 	if event.is_action_pressed("ui_up"):
 		my_rotate = true
-	if event.is_action_released("ui_up"):
+	elif event.is_action_released("ui_up"):
 		my_rotate = false
-
-	
+		
+	if event is InputEventKey and event.keycode == KEY_ESCAPE:
+		get_tree().quit()
