@@ -62,9 +62,8 @@ material = SubResource("StandardMaterial3D_4by26")
 transform = Transform3D(0.961334, 0, -0.275386, 0, 1, 0, 0.275386, 0, 0.961334, -1.31442, 3.37616, 6.92751)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.984902, -0.0305469, -0.170396, 0.0792912, 0.954589, 0.28718, 0.153886, -0.296355, 0.942599, 6.55934, 3.85638, 8.71611)
+transform = Transform3D(0.984902, -0.0305468, -0.170396, 0.0792912, 0.954589, 0.28718, 0.153886, -0.296355, 0.942599, 6.55934, 3.85638, 8.71611)
 light_energy = 2.0
-shadow_enabled = true
 
 [node name="ground" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -80,3 +79,39 @@ material = SubResource("StandardMaterial3D_j703f")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 50, 49, 0)
 size = Vector3(100, 100, 1)
 material = SubResource("StandardMaterial3D_j703f")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer"]
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D2" type="Line2D" parent="CanvasLayer"]
+position = Vector2(151, 0)
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D3" type="Line2D" parent="CanvasLayer"]
+position = Vector2(300, 0)
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D4" type="Line2D" parent="CanvasLayer"]
+position = Vector2(451, 0)
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D5" type="Line2D" parent="CanvasLayer"]
+rotation = -1.57079
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D6" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 149)
+rotation = -1.57079
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D7" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 300)
+rotation = -1.57079
+points = PackedVector2Array(-2, -3, 1, 648)
+
+[node name="Line2D8" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 450)
+rotation = -1.57079
+points = PackedVector2Array(-2, -3, 1, 648)
