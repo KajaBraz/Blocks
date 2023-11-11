@@ -25,7 +25,7 @@ func _ready():
 	print(remove_column_tiles1)
 	var remove_column_tiles2 = find_consecutive_in_columns([
 		[1,2,3,3,3,3],
-		[1,2,2,2,3,3],
+		[1,2,3,2,3,3],
 		[3,3,3,3,3,3],
 		[1,2,2,3,3,3],
 		[2,2,2,3,2,3],
@@ -58,22 +58,33 @@ func swap_vertically(coords_a, coords_b):
 	return swap_tiles(coords_a, coords_b, 1)
 
 
-func initialise_board(n_rows, n_columns, available_tiles):
-	var board = []
+func initialise_board(n_rows: int, n_columns: int, available_tiles: Array):
+	## Create a board composed of tiles randomly chosen out of the specified values
+	
+	var board: Array = []
+	
 	for i in range(n_rows):
 		board = add_row(board, n_columns, available_tiles)
+	
 	return board
 
 
-func generate_row(n_columns, available_tiles):
-	var new_row = []
+func generate_row(n_columns: int, available_tiles: Array):
+	## Generate an array of random tiles
+	
+	var new_row: Array = []
+	var tile: int
+	
 	for i in range(n_columns):	
-		var tile = available_tiles[randi_range(0, len(available_tiles) - 1)]
+		tile = available_tiles[randi_range(0, len(available_tiles) - 1)]
 		new_row.append(tile)
+	
 	return new_row
 
 
-func add_row(board, n_columns, available_tiles):
+func add_row(board: Array, n_columns: int, available_tiles: Array):
+	## Add a new row to the board
+	
 	board.append(generate_row(n_columns, available_tiles))
 	return board
 
@@ -85,48 +96,56 @@ func find_consecutive_in_rows(board: Array) -> Dictionary:
 	## - values are arrays containing Vectors with tiles indices 
 	
 	var to_remove: Dictionary = {}
+	var consecutive_tiles: Array = []
 	
 	for i in range(len(board)):
-		var common: int = 0
-		var row: Array = board[i]
+		consecutive_tiles = find_consecutive(board[i])
 		
-		for j in range(len(row) - 1):
-			if row[j] == row[j+1]:
-				common = 2 if common == 0 else common + 1
-				if j + 2 == len(row) and common >= 3:
-					update_array_in_dict_val(i, Vector2i(j + 2 - common, j + 1), to_remove)
-			else:
-				if common >= 3:
-					update_array_in_dict_val(i, Vector2i(j - common + 1, j), to_remove)
-				common = 0
+		if consecutive_tiles:
+			to_remove[i] = consecutive_tiles
+	
 	return to_remove
 
 
 func find_consecutive_in_columns(board: Array) -> Dictionary:
+	## Go over the board's columns and check if there are any three or more consecutive tiles
+	## Return a dictionary in which:
+	## - keys are columns' indices (columns with no consecutive tiles are excluded)
+	## - values are arrays containing Vectors with rows indices 
+	
 	var to_remove: Dictionary = {}
+	var column: Array = []
+	var consecutive_tiles: Array = []
 	
 	for i in range(len(board[0])):
-		var common: int = 0
+		column = []
 		
-		for j in range(len(board) - 1):
-			if board[j][i] == board[j+1][i]:
-				common = 2 if common == 0 else common + 1
-				if j + 2 == len(board) and common >= 3:
-					update_array_in_dict_val(i, Vector2i(j + 2 - common, j + 1), to_remove)
-			else:
-				if common >= 3:
-					update_array_in_dict_val(i, Vector2i(j - common + 1, j), to_remove)
-				common = 0
+		for row in board:
+			column.append(row[i])
+		
+		consecutive_tiles = find_consecutive(column)
+		
+		if consecutive_tiles:
+			to_remove[i] = consecutive_tiles
+
 	return to_remove
 
 
-func update_array_in_dict_val(k: int, v: Vector2i, d: Dictionary) -> Dictionary:
-	## Update the dictionary with a new key-value pair
-	## The dictionary's values are arrays containing Vectors
+func find_consecutive(tiles_array:Array):
+	## Check if any three or more consecutive items in an array have the same values
+	## Return the start and end indices of such groups
 	
-	if k in d:
-		d[k].append(v)
-	else:
-		d[k] = [v]
-	return d
-
+	var common: int = 0
+	var common_tiles: Array = []
+	
+	for i in range(len(tiles_array) - 1):
+		if tiles_array[i] == tiles_array[i+1]:
+			common = 2 if common == 0 else common + 1
+			if i + 2 == len(tiles_array) and common >= 3:
+				common_tiles.append(Vector2i(i + 2 - common, i + 1))
+		else:
+			if common >= 3:
+				common_tiles.append(Vector2i(i - common + 1, i))
+			common = 0
+	
+	return common_tiles
