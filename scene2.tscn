@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bxj4ogrqs753d"]
+[gd_scene load_steps=13 format=3 uid="uid://bxj4ogrqs753d"]
 
 [ext_resource type="Script" path="res://scene2_main_script.gd" id="1_mivcq"]
 
@@ -13,6 +13,9 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cmeqx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3813c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmqbm"]
+albedo_color = Color(1, 1, 1, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tihxt"]
 
@@ -50,16 +53,22 @@ material = SubResource("StandardMaterial3D_cmeqx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
 material = SubResource("StandardMaterial3D_3813c")
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+[node name="Container" type="Node3D" parent="."]
+
+[node name="Container2" type="CSGBox3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2, 0)
+material = SubResource("StandardMaterial3D_wmqbm")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Container2"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0, 0)
 material = SubResource("StandardMaterial3D_tihxt")
 
-[node name="CSGBox3D8" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+[node name="CSGBox3D8" type="CSGBox3D" parent="Container2"]
+transform = Transform3D(0.5, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0)
 material = SubResource("StandardMaterial3D_4by26")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.961334, 0, -0.275386, 0, 1, 0, 0.275386, 0, 0.961334, -1.31442, 3.37616, 6.92751)
+transform = Transform3D(0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, -1.169, 3.431, 6.838)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.984902, -0.0305468, -0.170396, 0.0792912, 0.954589, 0.28718, 0.153886, -0.296355, 0.942599, 6.55934, 3.85638, 8.71611)
@@ -81,37 +90,104 @@ size = Vector3(100, 100, 1)
 material = SubResource("StandardMaterial3D_j703f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(50, 100)
+scale = Vector2(0.5, 0.5)
+transform = Transform2D(0.5, 0, 0, 0.5, 50, 100)
 
 [node name="Line2D" type="Line2D" parent="CanvasLayer"]
-points = PackedVector2Array(-2, -3, 1, 648)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D2" type="Line2D" parent="CanvasLayer"]
-position = Vector2(151, 0)
-points = PackedVector2Array(-2, -3, 1, 648)
+position = Vector2(100, 0)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D3" type="Line2D" parent="CanvasLayer"]
-position = Vector2(300, 0)
-points = PackedVector2Array(-2, -3, 1, 648)
+position = Vector2(200, 0)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D4" type="Line2D" parent="CanvasLayer"]
-position = Vector2(451, 0)
-points = PackedVector2Array(-2, -3, 1, 648)
+position = Vector2(300, 0)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D5" type="Line2D" parent="CanvasLayer"]
-rotation = -1.57079
-points = PackedVector2Array(-2, -3, 1, 648)
+position = Vector2(400, 0)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D6" type="Line2D" parent="CanvasLayer"]
-position = Vector2(0, 149)
-rotation = -1.57079
-points = PackedVector2Array(-2, -3, 1, 648)
+position = Vector2(500, 0)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D7" type="Line2D" parent="CanvasLayer"]
-position = Vector2(0, 300)
-rotation = -1.57079
-points = PackedVector2Array(-2, -3, 1, 648)
+position = Vector2(600, 0)
+points = PackedVector2Array(0, -1, 0, 1200)
+width = 5.0
 
 [node name="Line2D8" type="Line2D" parent="CanvasLayer"]
-position = Vector2(0, 450)
-rotation = -1.57079
-points = PackedVector2Array(-2, -3, 1, 648)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D9" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 100)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D10" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 200)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D11" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 300)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D12" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 400)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D13" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 500)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D14" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 600)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D15" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 700)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D16" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 800)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D17" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 900)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D18" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 1000)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D19" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 1100)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
+
+[node name="Line2D20" type="Line2D" parent="CanvasLayer"]
+position = Vector2(0, 1200)
+points = PackedVector2Array(0, 0, 600, 0)
+width = 5.0
