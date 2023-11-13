@@ -2,44 +2,45 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print('Create board')
-	var new_board = initialise_board(6, 5, [1,2,3,4,5,6])
-	print(new_board)
-	
-	print('\nSwap')
-	var t1 = [0,0,0]
-	var t2 = [5,5,5]
-	print(swap_horizontally(t1, t2))
-	print(swap_vertically(t1, t2))
+	print('Initial board')
+	var new_board = initialise_board(6, 6, [1,2,3,4,5,6])
+#	var new_board = [[1,2,5,3,4,3],[1,2,3,3,3,3],[1,2,3,2,3,3],[3,3,3,3,3,3],[1,2,2,3,3,3],[2,2,2,3,3,3],[2,2,2,1,3,3]]
+#	var new_board = [[1,4,2,6,6],[2,2,3,4,6]]
+#	var new_board = [[1,1,1],[1,1,1],[1,1,1]]
+	pprint(new_board)
 	
 	print('\nVerify rows')
-	var remove_row_tiles1 = find_consecutive_in_rows(new_board)
-	print(remove_row_tiles1)
-	var remove_row_tiles2 = find_consecutive_in_rows([[1,2,3,3,3,4],[1,2,2,2,2,3],[3,3,3,3,3,3],[1,2,2,3,3,3],[2,2,2,3,3,3],[2,2,2,1,3,3]])
-	print(remove_row_tiles2)
-	var remove_row_tiles3 = find_consecutive_in_rows([[1,4,2,6,6],[2,2,3,4,6]])
-	print(remove_row_tiles3)
+	var row_tiles_to_remove = find_consecutive_in_rows(new_board)
+	print(row_tiles_to_remove)
 	
 	print('\nVerify columns')
-	var remove_column_tiles1 = find_consecutive_in_columns(new_board)
-	print(remove_column_tiles1)
-	var remove_column_tiles2 = find_consecutive_in_columns([
-		[1,2,3,3,3,3],
-		[1,2,3,2,3,3],
-		[3,3,3,3,3,3],
-		[1,2,2,3,3,3],
-		[2,2,2,3,2,3],
-		[2,2,2,1,3,3]])
-	print(remove_column_tiles2)
-	var remove_column_tiles3 = find_consecutive_in_columns([
-		[1,1,1],
-		[1,1,1],
-		[1,1,1]])
-	print(remove_column_tiles3)
+	var column_tiles_to_remove = find_consecutive_in_columns(new_board)
+	print(column_tiles_to_remove)
+	
+	print('\nRemove tiles')
+	remove_tiles(row_tiles_to_remove, column_tiles_to_remove, new_board)
+	pprint(new_board)
+	
+	print('\nAdjust board')
+	adjust_board(new_board)
+	pprint(new_board)
 
+
+#	print('\nSwap')
+#	var t1 = [0,0,0]
+#	var t2 = [5,5,5]
+#	print(swap_horizontally(t1, t2))
+#	print(swap_vertically(t1, t2))
+	
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func pprint(list: Array):
+	for row in list:
+		print(row)
 
 
 func swap_tiles(coords_a, coords_b, direction):
@@ -131,7 +132,7 @@ func find_consecutive_in_columns(board: Array) -> Dictionary:
 	return to_remove
 
 
-func find_consecutive(tiles_array:Array):
+func find_consecutive(tiles_array: Array) -> Array:
 	## Check if any three or more consecutive items in an array have the same values
 	## Return the start and end indices of such groups
 	
@@ -149,3 +150,54 @@ func find_consecutive(tiles_array:Array):
 			common = 0
 	
 	return common_tiles
+
+
+func remove_row_tiles(row_tiles: Dictionary, board: Array, null_tile: int = 0) -> Array:
+	## Iterate over the items of the dictionary containing rows' indices with tiles that need to be removed
+	## Change their values in the default blank tile value
+	
+	for row_i in row_tiles.keys():
+		for row_range in row_tiles[row_i]:
+			for column_i in range(row_range[0], row_range[1] + 1):
+				board[row_i][column_i] = null_tile
+	return board
+
+
+func remove_column_tiles(column_tiles: Dictionary, board: Array, null_tile: int = 0) -> Array:
+	## Iterate over the items of the dictionary containing columns' indices with tiles that need to be removed
+	## Change their values in the default blank tile value
+	
+	for column_i in column_tiles.keys():
+		for column_range in column_tiles[column_i]:
+			for row_i in range(column_range[0], column_range[1] + 1):
+				board[row_i][column_i] = null_tile
+	return board
+
+
+func remove_tiles(row_tiles: Dictionary, column_tiles: Dictionary, board: Array):
+	## Change values of the tiles that need to be removed to the default blank tile value
+	
+	remove_row_tiles(row_tiles, board)
+	remove_column_tiles(column_tiles, board)
+	return board
+
+
+func adjust_board(board: Array, null_tile: int = 0) -> Array:
+	## Iterate over the board and move blank tiles to the top rows
+	
+	for i in range(board.size() - 1, -1, -1):
+		for j in range(board[i].size()):
+			var tile = board[i][j]
+			if tile == null_tile:
+				var upper_tile_indices = find_upper_tile(i, j, board, null_tile)
+				board[i][j] = board[upper_tile_indices[0]][upper_tile_indices[1]]
+				board[upper_tile_indices[0]][upper_tile_indices[1]] = null_tile
+	return board
+
+
+func find_upper_tile(i: int, j: int, board: Array, null_tile: int = 0) -> Vector2i:
+	## Find the first not blank tile in the upper rows for the provided indices
+	
+	while i > 0 and board[i][j] == null_tile:
+		i -= 1
+	return Vector2i(i, j)
