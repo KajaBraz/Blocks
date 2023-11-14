@@ -24,13 +24,36 @@ func _ready():
 	print('\nAdjust board')
 	adjust_board(new_board)
 	pprint(new_board)
-
-
-#	print('\nSwap')
-#	var t1 = [0,0,0]
-#	var t2 = [5,5,5]
-#	print(swap_horizontally(t1, t2))
-#	print(swap_vertically(t1, t2))
+	
+	print('\nSwap horizontally')
+	var h1 = Vector2i(1,3)
+	var h2 = Vector2i(1,4)
+	swap_tiles(h1, h2, new_board)
+	pprint(new_board)
+	
+	print('\nSwap vertically')
+	var v1 = Vector2i(4,3)
+	var v2 = Vector2i(5,3)
+	swap_tiles(v1, v2, new_board)
+	pprint(new_board)
+	
+	print('\nSwap incorrectly 1')
+	var w1 = Vector2i(4,4)
+	var w2 = Vector2i(5,3)
+	swap_tiles(w1, w2, new_board)
+	pprint(new_board)
+	
+	print('\nSwap incorrectly 2')
+	var w3 = Vector2i(5,0)
+	var w4 = Vector2i(5,3)
+	swap_tiles(w3, w4, new_board)
+	pprint(new_board)
+	
+	print('\nSwap incorrectly 3')
+	var w5 = Vector2i(2,3)
+	var w6 = Vector2i(5,3)
+	swap_tiles(w5, w6, new_board)
+	pprint(new_board)
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,20 +66,46 @@ func pprint(list: Array):
 		print(row)
 
 
-func swap_tiles(coords_a, coords_b, direction):
-	var a = coords_a[direction]
-	var b = coords_b[direction]
-	coords_a[direction] = b
-	coords_b[direction] = a
-	return [coords_a, coords_b]
-
-
-func swap_horizontally(coords_a, coords_b):
-	return swap_tiles(coords_a, coords_b, 0)
-
+func swap_tiles(coords_a: Vector2i, coords_b: Vector2i, board: Array) -> Array:
+	## Swap two adjacent tiles
 	
-func swap_vertically(coords_a, coords_b):
-	return swap_tiles(coords_a, coords_b, 1)
+	if coords_a[0] == coords_b[0]:
+		swap_horizontally(coords_a, coords_b, board)
+	else:
+		swap_vertically(coords_a, coords_b, board)
+	return board
+
+
+func swap_horizontally(coords_a: Vector2i, coords_b: Vector2i, board: Array) -> Array:
+	## Swap two horizontally adjacent tiles
+	
+	var x_a = coords_a[0]
+	var x_b = coords_b[0]
+	var y_a = coords_a[1]
+	var y_b = coords_b[1]
+
+	if x_a - x_b == 0 and abs(y_a - y_b) == 1:
+		var a = board[x_a][y_a]
+		var b = board[x_b][y_b]
+		board[x_a][y_a] = b
+		board[x_b][y_b] = a
+	return board
+
+
+func swap_vertically(coords_a: Vector2i, coords_b: Vector2i, board: Array) -> Array:
+	## Swap two vertically adjacent tiles
+	
+	var x_a = coords_a[0]
+	var x_b = coords_b[0]
+	var y_a = coords_a[1]
+	var y_b = coords_b[1]
+	
+	if y_a - y_b == 0 and abs(x_a - x_b) == 1:
+		var a = board[x_a][y_a]
+		var b = board[x_b][y_b]
+		board[x_a][y_a] = b
+		board[x_b][y_b] = a
+	return board
 
 
 func initialise_board(n_rows: int, n_columns: int, available_tiles: Array):
@@ -174,7 +223,7 @@ func remove_column_tiles(column_tiles: Dictionary, board: Array, null_tile: int 
 	return board
 
 
-func remove_tiles(row_tiles: Dictionary, column_tiles: Dictionary, board: Array):
+func remove_tiles(row_tiles: Dictionary, column_tiles: Dictionary, board: Array) -> Array:
 	## Change values of the tiles that need to be removed to the default blank tile value
 	
 	remove_row_tiles(row_tiles, board)
